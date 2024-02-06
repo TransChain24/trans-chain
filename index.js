@@ -1,7 +1,11 @@
 const express = require('express');
 const auth = require('./api/auth');
 const app = express();
-const port = 3000;
+const mongoose = require('mongoose');
+const common = require("./api/common");
+const cors = require('cors');
+
+app.use(cors());
 
 app.use(auth);
 
@@ -9,6 +13,11 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+app.use("/common", common);
+
+mongoose.connect("mongodb+srv://transchain24:transchain24@transchain-cluster.vyuaug6.mongodb.net/TransChain").then(() => {
+    app.listen(3000, () => {
+        console.log("connection on PORT 3000");
+        console.log("Mongo DB connect");
+    });
 });
