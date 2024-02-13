@@ -16,21 +16,21 @@ const user = new Schema({
         required: true
     },
 
-    organizationName:{
+    organizationName: {
         type: String,
         required: true
     },
 
-    GSTIN:{
+    GSTIN: {
         type: String,
         required: true,
         maxlength: 15
     },
 
-    role:{
+    role: {
         type: String,
         required: true,
-        // enum: ['supplier', 'manufacturer', 'distributor', 'retailer']
+        enum: ['supplier', 'manufacturer', 'distributor', 'retailer']
     }
 
 }, {
