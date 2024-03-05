@@ -6,8 +6,7 @@ const common = require("./api/common");
 const cors = require('cors');
 
 app.use(cors());
-
-app.use(auth);
+app.use(express.json());
 
 app.get('/', (req, res) => { 
     res.send('Hello World!');
