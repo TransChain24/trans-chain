@@ -4,7 +4,13 @@ const product = new Schema({
     productID: {
         type: String,
         required: true,
-        unique:true
+        unique: true
+    },
+
+    quantity: {
+        type: Number,
+        required: true,
+        default: 0
     },
 
     productName: {

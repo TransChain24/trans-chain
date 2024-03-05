@@ -54,7 +54,7 @@ otp.get("/verifyOtp/:emailID/:otp", async (req, res) => {
     try {
         const removeOtp = await otpModel.findOneAndDelete({ otp: req.params.otp, emailID: req.params.emailID });
         if (removeOtp) {
-            res.send({ "status": "otp verified.." })
+            res.send({ "status": "otp verified.." });
         } else {
             res.send({ "status": "otp is wrong.." });
         }

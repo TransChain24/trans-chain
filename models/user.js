@@ -30,7 +30,7 @@ const user = new Schema({
     role: {
         type: String,
         required: true,
-        enum: ['supplier', 'manufacturer', 'distributor', 'retailer']
+        enum: ['manufacturer', 'distributor', 'retailer']
     }
 
 }, {

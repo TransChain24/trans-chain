@@ -1,10 +1,10 @@
 const { model, Schema } = require("mongoose");
 
 const transaction = new Schema({
-    transactionID: {
-        type: String,
-        required: true
-    },
+    // transactionID: {
+    //     type: String,
+    //     required: true
+    // },
 
     batchID: {
         type: String,
@@ -23,19 +23,26 @@ const transaction = new Schema({
         required: true
     },
 
-    senderID: {
+    prevOwner: {
         type: String,
         required: true
     },
 
-    receiverID: {
+    currentOwner: {
         type: String,
         required: true
     },
 
-    sendTo: {
+    currentOwnerType: {
         type: String,
         enum: ["distributor", "retailer"],
+        required: true
+    },
+
+    status: {
+        type: String,
+        enum: ["pending", "accept", "reject"],
+        default: "pending",
         required: true
     }
 
