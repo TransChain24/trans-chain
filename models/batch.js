@@ -1,10 +1,11 @@
 const { model, Schema } = require("mongoose");
 
 const batch = new Schema({
-    batchID: {
-        type: String,
-        required: true
-    },
+    // batchID: {
+    //     type: String,
+    //     required: true
+    // },
+    
     productID: {
         type: String,
         ref: 'product',
