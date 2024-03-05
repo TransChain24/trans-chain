@@ -1,18 +1,18 @@
 const { model, Schema } = require("mongoose");
 
-const product = new Schema({
-    productID: {
+const request = new Schema({
+    transactionID: {
         type: String,
-        required: true,
-        unique:true
+        ref: 'transaction',
+        required: true
     },
 
-    productName: {
+    senderID: {
         type: String,
         required: true
     },
 
-    productDescription: {
+    receiverID: {
         type: String,
         required: true
     },
@@ -21,4 +21,4 @@ const product = new Schema({
     timestamps: true
 });
 
-module.exports = model('product', product);
+module.exports = model('request', request);
