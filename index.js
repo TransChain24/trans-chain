@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const common = require("./api/common");
 const cors = require('cors');
 const bodyParser = require('body-parser');
+// const db = require('./api/db');
 
 app.use(cors());
 app.use(express.json());

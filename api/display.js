@@ -2,9 +2,10 @@ const { Router } = require('express');
 const user = require('../models/user');
 const display = Router();
 
-display.get("/display", async (req, res) => {
+display.get("/display/", async (req, res) => {
     try {
         const role = req.query.role;
+        console.log("Role:", role);
         if (role == "distributor") {
             const data = await user.find({ role: "manufacturer" });
             if (data) {

@@ -7,7 +7,7 @@ const product = new Schema({
         unique: true
     },
 
-    quantity: {
+    count: {
         type: Number,
         required: true,
         default: 0

@@ -7,6 +7,11 @@ const request = new Schema({
     //     required: true
     // },
 
+    // requestID:{
+    //     type: String,
+    //     required: true
+    // },
+
     productID:{
         type: String,
         ref: 'product',
