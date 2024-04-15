@@ -3,6 +3,7 @@ const inventory = require('../models/inventory'); // Import the inventory model
 
 const availProduct = Router();
 
+
 availProduct.get("/availProduct/", async (req, res) => {
     try {
         const distributorID = req.query.distributorID;

@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const product = Router();
 const productModel = require("./../models/product");
+const inventory = require('../models/inventory');
 
 product.post("/create", async (req, res) => {
     try {
@@ -55,5 +56,29 @@ product.get("/getAllProduct", async (req, res) => {
         res.send(error);
     }
 });
+
+product.get("/getOwnerProducts/:ownerID", async (req, res) => {
+    try {
+        const ownerID = req.params.ownerID;
+
+        // Find all product IDs associated with the given owner ID in the inventory table
+        const productIDs = await inventory.find({ ownerID }).distinct('productID');
+
+        // If no product IDs are found, send a 404 response
+        if (!productIDs || productIDs.length === 0) {
+            return res.status(404).json({ message: "No products found for the given owner" });
+        }
+
+        // Fetch details of each product using the retrieved product IDs
+        const products = await productModel.find({ productID: { $in: productIDs } });
+
+        // Send the list of products with their details
+        res.status(200).json({ products });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 
 module.exports = product;

@@ -2,7 +2,6 @@ const { Router } = require('express')
 const auth = Router();
 const user = require("./../models/user");
 
-
 auth.post("/register", async (req, res) => {
     try {
         const data = new user(req.body);
