@@ -70,15 +70,29 @@ product.get("/getOwnerProducts/:ownerID", async (req, res) => {
         }
 
         // Fetch details of each product using the retrieved product IDs
-        const products = await productModel.find({ productID: { $in: productIDs } });
+        const products = await Promise.all(productIDs.map(async (productID) => {
+            // Find total quantity of the product in the inventory table
+            const totalQuantity = await inventory.findOne({ ownerID, productID }).select('totalQuantity');
 
-        // Send the list of products with their details
+            // Find product details
+            const productDetails = await productModel.findOne({ productID });
+
+            return {
+                productID: productID,
+                productName: productDetails.productName,
+                productDescription: productDetails.productDescription,
+                totalQuantity: totalQuantity ? totalQuantity.totalQuantity : 0
+            };
+        }));
+
+        // Send the list of products with their details and total quantity
         res.status(200).json({ products });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 
 module.exports = product;

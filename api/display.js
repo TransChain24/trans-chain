@@ -48,8 +48,10 @@ display.get("/display/", async (req, res) => {
 //     }
 // });
 
-display.get("/getUserDetailsFromInventory", async (req, res) => {
+display.get("/getUserDetailsFromInventory/:role", async (req, res) => {
     try {
+        const role = req.params.role; // Get the role from the query parameters
+
         // Retrieve all inventory data
         const inventoryData = await inventory.find();
 
@@ -61,23 +63,24 @@ display.get("/getUserDetailsFromInventory", async (req, res) => {
             // Retrieve user details based on ownerID
             const userDataFromOwnerID = await user.findById(entry.ownerID).select("_id userName organizationName GSTIN role");
 
-            // If user details are found, push them to the array
-            if (userDataFromOwnerID) {
+            // If user details are found and the role matches, push them to the array
+            if (userDataFromOwnerID && userDataFromOwnerID.role === role) {
                 userDetails.push(userDataFromOwnerID);
             }
         }
 
         // Check if any user details were found
         if (userDetails.length > 0) {
-            res.status(200).json({ status: "User details fetched successfully", userDetails });
+            res.status(200).json({ userDetails, status: "User details fetched successfully" });
         } else {
-            res.status(404).json({ message: "User details not found" });
+            res.status(404).json({ message: "User details not found for the specified role" });
         }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 
 module.exports = display;
