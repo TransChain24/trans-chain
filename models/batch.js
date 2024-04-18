@@ -17,6 +17,10 @@ const batch = new Schema({
         required: true
     },
 
+    serialNumbers: {
+        type: [String],
+        required: true,
+    },
 }, {
     timestamps: true
 });

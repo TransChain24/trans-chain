@@ -8,6 +8,7 @@ const request = require('./request');
 const acceptRequest = require('./acceptRequest');
 const extractSerialNumbers = require('./extractSerialNumbers');
 const availProduct = require('./availProduct');
+const checkSerialNumber = require('./checkSerialNumber');
 
 common.use("/auth", auth);
 common.use("/otp", otp);
@@ -17,5 +18,6 @@ common.use("/request",request);
 common.use("/acceptRequest",acceptRequest);
 common.use("/extractSerialNumbers",extractSerialNumbers);
 common.use("/availProduct",availProduct);
+common.use("/checkSerialNumber",checkSerialNumber);
 
 module.exports = common;

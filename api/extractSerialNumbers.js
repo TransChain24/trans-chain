@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const extractSerialNumbers = Router();
-
+const request = require('./../models/request');
 const SerialNumber = require("../models/serialNumber");
 const Inventory = require("../models/inventory");
 const Transaction = require("../models/transaction");
@@ -8,9 +8,13 @@ const Batch = require("../models/batch"); // Adjust the import statement
 
 extractSerialNumbers.post("/extractSerialNumbers", async (req, res) => {
   try {
-    const { distributorID, retailerID, productID, requestedQuantity } = req.body;
+    const { requestID, distributorID, retailerID, productID, requestedQuantity } = req.body;
 
-    const ownerID = retailerID;
+    // const ownerID = retailerID;
+
+    // Update Request Status
+    await request.updateOne({ _id: requestID }, { $set: { status: 'accept' } });
+
     // Find matching batches
     const matchingBatches = await SerialNumber.find({
       ownerID: distributorID,
@@ -87,6 +91,7 @@ extractSerialNumbers.post("/extractSerialNumbers", async (req, res) => {
       productID,
       quantity: requestedQuantity,
       ownerID: retailerID,
+      serialNumbers: deductedSerialNumbers
       // Add other necessary fields as needed
     });
 

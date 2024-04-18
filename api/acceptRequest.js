@@ -15,20 +15,20 @@ acceptRequest.post('/acceptRequest', async (req, res) => {
     // Update Request Status
     await request.updateOne({ _id: requestID }, { $set: { status: 'accept' } });
 
-    // Add Entry in Batch Table
-    const batchID = `Batch_${productID}_M2D_${new Date().getTime()}`;
-    await batch.create({ batchID, productID, quantity });
-
     // Fetch product count from the product table
     const productDetails = await product.findOne({ productID });
     if (!productDetails) {
       throw new Error('Product details not found');
     }
-
+  
     // Generate Serial Numbers starting from the product count
     const startCount = productDetails.count + 1;
     const generatedSerialNumbers = Array.from({ length: quantity }, (_, index) => `${productID}_${startCount + index}`);
     console.log(generatedSerialNumbers);
+
+    // Add Entry in Batch Table
+    const batchID = `Batch_${productID}_M2D_${new Date().getTime()}`;
+    await batch.create({ batchID, productID, quantity, serialNumbers: generatedSerialNumbers });
 
     // Create or update SerialNumber entry
     await SerialNumber.updateOne(
