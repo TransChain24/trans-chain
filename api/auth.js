@@ -32,4 +32,15 @@ auth.post("/login", async (req, res) => {
     }
 });
 
+auth.get("/profile", async (req, res) => {
+    try {
+        const { id } = req.query;
+        const data = await user.findById({ _id: id });
+        res.send({ status: true, data: data });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ status: false, error: "Internal Server Error" });
+    }
+});
+
 module.exports = auth;
