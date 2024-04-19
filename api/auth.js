@@ -39,7 +39,7 @@ auth.get("/profile", async (req, res) => {
         res.send({ status: true, data: data });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ status: false, error: "Internal Server Error" });
+        res.status(500).send({ status: false, error: "Internal Server Error" });
     }
 });
 
